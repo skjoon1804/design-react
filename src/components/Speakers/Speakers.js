@@ -1,24 +1,14 @@
 import React from 'react'
+import withData from './withData'
 
-const Speakers = () => {
-    const speakers = [
-        {
-            imageSrc : 'speaker-component-1124'
-        },
-        {
-            imageSrc : 'speaker-component-1530'
-        },
-        {
-            imageSrc : 'speaker-component-10803'
-        }
-    ];
-
+const Speakers = ({speakers}) => {
     return (
         <div>
-            {speakers.map((speaker) => {
-                return <img src={`images/${speaker.imageSrc}.png`} key={speaker.imageSrc} />;
-            })}
+            {speakers.map(({imageSrc, name}) => {
+                return <img src={`/images/${imageSrc}.png`} key={imageSrc} alt={name}/>;
+            })} 
         </div>
     );
-}
-export default Speakers;
+};
+const maxSpeakersToShow = 3;
+export default withData(maxSpeakersToShow)(Speakers);
