@@ -6,16 +6,21 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "next",
     "build": "next build",
-    "start": "next start"      
-},
+    "start": "next start"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "next": "^10.0.3",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "tailwindcss": "^2.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "2.1.0",
+    "postcss-preset-env": "6.7.0",
+    "tailwindcss": "1.2.0"
+  },
   "description": ""
 }
