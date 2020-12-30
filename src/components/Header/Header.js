@@ -9,7 +9,7 @@ const Header = () => (
             </div>
             <div className='col-span-2 text-center md:text-right'>
                 <div className='flex justify-center md:justify-end'>
-                    <img src='images/SVCClogo.png' />
+                    <img src='/SVCClogo.png' />
                 </div>
                 <h2>Silicon Valley Code Camp 2020</h2>
             </div>
