@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import withData from './withData'
 import SpeakerSearchBar from '../SpeakerSearchBar/SpeakerSearchBar'
 import Speaker from '../Speaker/Speaker'
@@ -42,6 +42,8 @@ const Speakers = () => {
             'Eugene Chuvyrov is  a Senior Cloud Architect at Microsoft. He works directly with both startups and enterprises to enable their solutions in Microsoft cloud, and to make Azure better as a result of this work with partners.',
         },
     ];
+
+    const [searchQuery, setSearchQuery] = useState("");
 
     return (
         <div>
