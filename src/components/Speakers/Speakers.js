@@ -18,7 +18,7 @@ const Speakers = () => {
         const speakerIndex = speakers.map((speaker) => speaker.id).indexOf(speakerRec.id);
 
         try {
-            await axios.put(`http://localhost:3000/speakers/${speakerRec.id}`, toggledSpeakerRec);
+            await axios.put(`http://localhost:4000/speakers/${speakerRec.id}`, toggledSpeakerRec);
             setSpeakers([...speakers.slice(0, speakerIndex), toggledSpeakerRec, ...speakers.slice(speakerIndex+1)]);
         } catch (e) {
             setStatus(REQUEST_STATUS.ERROR);
@@ -39,10 +39,10 @@ const Speakers = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/speakers");
-                console.log("====START=====");
-                console.log(response.data);
-                console.log("=====END=====");
+                const response = await axios.get("http://localhost:4000/speakers");
+                console.log("!!START!!");
+                console.log(response);
+                console.log("!!END!!");
                 setSpeakers(response.data);
                 setStatus(REQUEST_STATUS.SUCCESS);
             } catch (e) {
