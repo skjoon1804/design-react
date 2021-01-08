@@ -4,6 +4,7 @@ import withData from './withData'
 import SpeakerSearchBar from '../SpeakerSearchBar/SpeakerSearchBar'
 import Speaker from '../Speaker/Speaker'
 import requestReducer, { REQUEST_STATUS } from '../../reducers/request';
+import withRequest from '../HOCs/withRequest';
 import {
     GET_ALL_FAILURE,
     GET_ALL_SUCCESS,
@@ -11,52 +12,16 @@ import {
     PUT_SUCCESS,
 } from '../../actions/request';
 
-const Speakers = () => {
+const Speakers = ({records: speakers, status, error, put}) => {
     const onFavoriteToggleHandler = async(speakerRec) => {
-        try {
-            const toggledSpeakerRec = {
-                ...speakerRec,
-                isFavorite: !speakerRec.isFavorite,
-            };
-            await axios.put(`http://localhost:4000/speakers/${speakerRec.id}`, toggledSpeakerRec);
-
-            dispatch({
-                type: PUT_SUCCESS,
-                record: toggledSpeakerRec,
-            });
-        } catch (e) {
-            dispatch({
-                type: PUT_FAILURE,
-                error: e,
-            });
-        }
+        put({
+            ...speakerRec,
+            isFavorite: !speakerRec.isFavorite
+        });
     };
 
     const [searchQuery, setSearchQuery] = useState('');
 
-    const [{records: speakers, status, error}, dispatch] = useReducer(requestReducer, {
-        records: [],
-        status: REQUEST_STATUS.LOADING,
-        error: null,
-    });
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get("http://localhost:4000/speakers");
-                dispatch({
-                    records: response.data,
-                    type: GET_ALL_SUCCESS,
-                });
-            } catch (e) {
-                dispatch({
-                    error: e,
-                    type: GET_ALL_FAILURE,
-                });
-            }
-        }
-        fetchData();
-    }, [status]);
 
     const success = status === REQUEST_STATUS.SUCCESS;
     const isLoading = status === REQUEST_STATUS.LOADING;
@@ -86,4 +51,4 @@ const Speakers = () => {
         </div>
     );
 };
-export default Speakers;
+export default withRequest('http://localhost:4000', 'speakers')(Speakers);
