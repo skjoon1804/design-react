@@ -1,18 +1,14 @@
 import React, {useState, useEffect, useReducer} from 'react'
-import axios from 'axios'
 import withData from './withData'
 import SpeakerSearchBar from '../SpeakerSearchBar/SpeakerSearchBar'
 import Speaker from '../Speaker/Speaker'
 import requestReducer, { REQUEST_STATUS } from '../../reducers/request';
 import withRequest from '../HOCs/withRequest';
-import {
-    GET_ALL_FAILURE,
-    GET_ALL_SUCCESS,
-    PUT_FAILURE,
-    PUT_SUCCESS,
-} from '../../actions/request';
+import withSpecialMessage from '../HOCs/withSpecialMessage';
+import { compose } from 'recompose';
 
-const Speakers = ({records: speakers, status, error, put}) => {
+
+const Speakers = ({records: speakers, status, error, put, bgColor, specialMessage}) => {
     const onFavoriteToggleHandler = async(speakerRec) => {
         put({
             ...speakerRec,
@@ -21,15 +17,21 @@ const Speakers = ({records: speakers, status, error, put}) => {
     };
 
     const [searchQuery, setSearchQuery] = useState('');
-
+ 
 
     const success = status === REQUEST_STATUS.SUCCESS;
     const isLoading = status === REQUEST_STATUS.LOADING;
     const hasErrored = status === REQUEST_STATUS.ERROR;
 
     return (
-        <div>
+        <div className={bgColor}>
             <SpeakerSearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+            {specialMessage && specialMessage.length > 0 && (
+                <div className="bg-orange-100 border-l-8 border-orange-500 text-orange-700 p-4 text-2xl" role="alert">
+                    <p className='font-bold'>Special Message</p>
+                    <p>{specialMessage}</p>
+                </div>
+            )}
             {isLoading && <div>Loading...</div>}
             {hasErrored && 
                 <div>
@@ -51,4 +53,7 @@ const Speakers = ({records: speakers, status, error, put}) => {
         </div>
     );
 };
-export default withRequest('http://localhost:4000', 'speakers')(Speakers);
+export default compose(
+    withRequest('http://localhost:4000', 'speakers'),
+    withSpecialMessage()
+)(Speakers);
